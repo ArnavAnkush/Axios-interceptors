@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/Register";
+import MainLayout from "../layouts/MainLayout";
 
 const AppRoutes = () => {
   let router = createBrowserRouter([
@@ -19,6 +20,10 @@ const AppRoutes = () => {
           element: <RegisterPage />,
         },
       ],
+    },
+    {
+      path: "/main",
+      element: <MainLayout />,
     },
   ]);
   return <RouterProvider router={router} />;

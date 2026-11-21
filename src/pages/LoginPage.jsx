@@ -1,9 +1,20 @@
 import React from "react";
 import { RiMailLine, RiLockPasswordLine } from "@remixicon/react";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
   let navigate = useNavigate();
+  let {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm();
+  let formSubmit = (data) => {
+    console.log(data);
+    reset();
+  };
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -12,7 +23,7 @@ const LoginPage = () => {
           <p className="text-gray-500 mt-2">Login to your account</p>
         </div>
 
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -21,11 +32,15 @@ const LoginPage = () => {
             <div className="flex items-center border border-gray-300 rounded-lg px-3 focus-within:border-black">
               <RiMailLine className="text-gray-400" size={20} />
               <input
+                {...register("email", { required: "Email is required" })}
                 type="email"
                 placeholder="Enter your email"
                 className="w-full p-3 outline-none text-sm"
               />
             </div>
+            {errors.email && (
+              <p className="text-red-600">{errors.email.message}</p>
+            )}
           </div>
 
           {/* Password */}
@@ -36,11 +51,21 @@ const LoginPage = () => {
             <div className="flex items-center border border-gray-300 rounded-lg px-3 focus-within:border-black">
               <RiLockPasswordLine className="text-gray-400" size={20} />
               <input
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Minimum six characters are required",
+                  },
+                })}
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Create a password"
                 className="w-full p-3 outline-none text-sm"
               />
             </div>
+            {errors.password && (
+              <p className="text-red-600">{errors.password.message}</p>
+            )}
           </div>
 
           {/* Login Button */}
@@ -55,12 +80,12 @@ const LoginPage = () => {
         {/* Register Link */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Don't have an account?{" "}
-          <p
+          <button
             onClick={() => navigate("/register")}
             className="text-black font-semibold hover:underline cursor-pointer"
           >
             Register
-          </p>
+          </button>
         </p>
       </div>
     </div>
