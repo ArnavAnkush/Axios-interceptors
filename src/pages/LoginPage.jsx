@@ -3,6 +3,7 @@ import { RiMailLine, RiLockPasswordLine } from "@remixicon/react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { Auth } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const { registedUsers, loggedInUser, setLoggedInUser } = useContext(Auth);
@@ -18,12 +19,13 @@ const LoginPage = () => {
       return val.email === data.email && val.password === data.password;
     });
     if (!user) {
-      alert("User not found or Invalid credentails");
+      toast.error("User not found or Invalid credentails");
+      reset();
       return;
     }
     setLoggedInUser(user);
     localStorage.setItem("loggedInUser", JSON.stringify(user));
-    alert("user loggedIn");
+    toast.success("user loggedIn");
     navigate("/main");
     reset();
   };

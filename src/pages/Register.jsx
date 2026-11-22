@@ -3,6 +3,7 @@ import { RiUserLine, RiMailLine, RiLockPasswordLine } from "@remixicon/react";
 import { data, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { Auth } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const { registedUsers, setRegistedUsers } = useContext(Auth);
@@ -17,7 +18,7 @@ const RegisterPage = () => {
   let formSubmit = (data) => {
     let arr = [...registedUsers, data];
     setRegistedUsers(arr);
-    alert("user registered successfully");
+    toast.success("user registered successfully");
     localStorage.setItem("registeredUsers", JSON.stringify(arr));
     reset();
   };
