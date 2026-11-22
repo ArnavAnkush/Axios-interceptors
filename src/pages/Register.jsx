@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RiUserLine, RiMailLine, RiLockPasswordLine } from "@remixicon/react";
 import { data, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { Auth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
+  const [setRegistedUsers] = useContext(Auth);
+
+  let navigate = useNavigate();
   let {
     register,
     handleSubmit,
@@ -14,7 +18,6 @@ const RegisterPage = () => {
     console.log(data);
     reset();
   };
-  let navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
