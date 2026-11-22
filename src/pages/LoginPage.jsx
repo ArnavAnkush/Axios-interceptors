@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RiMailLine, RiLockPasswordLine } from "@remixicon/react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { Auth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
+  const { registedUsers, loggedInUser, setLoggedInUser } = useContext(Auth);
   let navigate = useNavigate();
   let {
     register,
@@ -12,7 +14,17 @@ const LoginPage = () => {
     reset,
   } = useForm();
   let formSubmit = (data) => {
-    console.log(data);
+    let user = registedUsers.find((val) => {
+      return val.email === data.email && val.password === data.password;
+    });
+    if (!user) {
+      alert("User not found or Invalid credentails");
+      return;
+    }
+    setLoggedInUser(user);
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    alert("user loggedIn");
+    navigate("/main");
     reset();
   };
   return (

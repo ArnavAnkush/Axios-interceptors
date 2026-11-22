@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Auth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
-  const [setRegistedUsers] = useContext(Auth);
+  const { registedUsers, setRegistedUsers } = useContext(Auth);
 
   let navigate = useNavigate();
   let {
@@ -15,7 +15,10 @@ const RegisterPage = () => {
     reset,
   } = useForm();
   let formSubmit = (data) => {
-    console.log(data);
+    let arr = [...registedUsers, data];
+    setRegistedUsers(arr);
+    alert("user registered successfully");
+    localStorage.setItem("registeredUsers", JSON.stringify(arr));
     reset();
   };
   return (
