@@ -22,7 +22,7 @@ const ProductsPage = () => {
     getProductsData();
   }, []);
 
-  if (isLoading) return <h1 className="text-4xl">Loading Users</h1>;
+  if (isLoading) return <h1 className="text-4xl">Loading Products</h1>;
 
   return (
     <div className="grid grid-cols-4 gap-8">
