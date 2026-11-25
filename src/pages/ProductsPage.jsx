@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 
 const ProductsPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [productsData, setProductsData] = useState([]);
 
   let getProductsData = async () => {
@@ -10,6 +11,7 @@ const ProductsPage = () => {
       let res = await axios.get("https://fakestoreapi.com/products");
 
       setProductsData(res.data);
+      setIsLoading(false);
       console.log(res.data);
     } catch (error) {
       console.log("error in api", error);
@@ -19,6 +21,8 @@ const ProductsPage = () => {
   useEffect(() => {
     getProductsData();
   }, []);
+
+  if (isLoading) return <h1 className="text-4xl">Loading Users</h1>;
 
   return (
     <div className="grid grid-cols-4 gap-8">
