@@ -4,25 +4,11 @@ import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { Auth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuthHook";
 
 const RegisterPage = () => {
-  const { registedUsers, setRegistedUsers } = useContext(Auth);
-
-  let navigate = useNavigate();
-  let {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm();
-  let formSubmit = (data) => {
-    let arr = [...registedUsers, data];
-    setRegistedUsers(arr);
-    toast.success("user registered successfully");
-    localStorage.setItem("registeredUsers", JSON.stringify(arr));
-    reset();
-    navigate("/");
-  };
+  let { register, registerFormSubmit, handleSubmit, navigate, errors } =
+    useAuth();
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -32,7 +18,7 @@ const RegisterPage = () => {
           <p className="text-gray-500 mt-2">Register to get started</p>
         </div>
 
-        <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(registerFormSubmit)} className="space-y-5">
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

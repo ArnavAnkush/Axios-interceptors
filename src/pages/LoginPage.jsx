@@ -1,34 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { RiMailLine, RiLockPasswordLine } from "@remixicon/react";
-import { useNavigate } from "react-router";
-import { useForm } from "react-hook-form";
-import { Auth } from "../contexts/AuthContext";
-import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuthHook";
 
 const LoginPage = () => {
-  const { registedUsers, loggedInUser, setLoggedInUser } = useContext(Auth);
-  let navigate = useNavigate();
-  let {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm();
-  let formSubmit = (data) => {
-    let user = registedUsers.find((val) => {
-      return val.email === data.email && val.password === data.password;
-    });
-    if (!user) {
-      toast.error("User not found or Invalid credentails");
-      reset();
-      return;
-    }
-    setLoggedInUser(user);
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    toast.success("user loggedIn");
-    navigate("/main");
-    reset();
-  };
+  let { register, logginFormSubmit, handleSubmit, navigate, errors } =
+    useAuth();
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -37,7 +13,7 @@ const LoginPage = () => {
           <p className="text-gray-500 mt-2">Login to your account</p>
         </div>
 
-        <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(logginFormSubmit)} className="space-y-5">
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
