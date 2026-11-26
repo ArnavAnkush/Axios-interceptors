@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router";
+import { Navigate, NavLink, useLocation } from "react-router";
 
 const Navbar = () => {
   return (
@@ -42,7 +42,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      <button className="py-3 bg-red-600 text-white rounded cursor-pointer">
+      <button
+        onClick={() => {
+          localStorage.removeItem("loggedInUser");
+          return <Navigate to={"/"} />;
+        }}
+        className="py-3 bg-red-600 text-white rounded cursor-pointer"
+      >
         Logout
       </button>
     </div>
